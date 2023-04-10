@@ -3,7 +3,34 @@ use std::io::ErrorKind;
 use rand::prelude::*;
 use crate::config;
 
-pub fn generate_word() -> String {
+use super::generation_types::{GenerationType};
+
+#[warn(unreachable_patterns)]
+pub fn generate(generation_type: GenerationType) -> () {
+    match generation_type {
+        GenerationType::ITERATIVE => generate_in_iterative_way(),
+        GenerationType::LOGICAL => generate_in_logical_way(),        
+        _ => eprintln!("Ocorreu um erro ao gerar. Tipo de geração inválido")
+    }
+}
+
+fn generate_in_iterative_way() -> () {
+    for _ in 0..config::MAX_WORD_COUNT {
+        let word = generate_word();
+        print!("{}{}", word, config::WHITESPACE);
+    }
+    return;
+}
+
+fn generate_in_logical_way() -> () {
+    let mut word = String::new();
+    while word != config::TARGET_WORD {
+        word = generate_word();
+        print!("{}{}", word, config::WHITESPACE);
+    }
+}
+
+fn generate_word() -> String {
     let word_size = calculate_word_size();
     let mut word = String::new();
     for _ in 0..word_size {
