@@ -1,10 +1,7 @@
-use random_generator::creator::generate_word;
+use random_generator::{creator::generate, generation_types::GenerationType};
 
 mod random_generator;
 mod config;
 fn main() {
-    for _ in 0..config::MAX_WORD_COUNT {
-        let word = generate_word();
-        print!("{} {}", word, config::WHITESPACE);
-    }
+    generate(GenerationType::ITERATIVE);
 }
